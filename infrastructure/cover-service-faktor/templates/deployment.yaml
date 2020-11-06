@@ -18,7 +18,9 @@ spec:
     metadata:
       labels:
         app: {{ .Release.Name }}-app
-        tier: frontend
+        networking/allow-ingress-access: "true"
+        networking/allow-monitoring-access: "true"
+        networking/allow-internet-access: "{{ .Release.Name }}"
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/path: "/metrics"
@@ -111,6 +113,7 @@ spec:
               name: {{ .Release.Name }}-nginx-config
         ports:
           - containerPort: 80
+            name: pod-http-port
       - name: nginx-exporter
         image: nginx/nginx-prometheus-exporter:{{ .Values.nginx.exporter.image.version }}
         imagePullPolicy: {{ .Values.app.image.imagePullPolicy }}
