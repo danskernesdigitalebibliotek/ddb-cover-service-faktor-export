@@ -1,0 +1,18 @@
+framework:
+    messenger:
+        # Uncomment this (and the failed transport below) to send failed messages to this transport for later handling.
+        # failure_transport: failed
+
+        transports:
+            async_faktor:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    exchange:
+                        name: fakor
+                    queues:
+                        cs_faktor:
+
+            #failed: 'doctrine://default?queue_name=failed'
+
+        routing:
+            'App\Message\FaktorMessage': async_faktor
